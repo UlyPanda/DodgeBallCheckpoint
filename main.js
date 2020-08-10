@@ -1,7 +1,11 @@
+'use strict';
+const assert = require('assert');
+
 const arrayOfPeople = [
 {
     id: 1,
     name: "Jimmy Neutron",
+    age: 21,
     skillSet: "engineering",
     placeBorn: "Columbus, Ohio",
     canThrowBall: true,
@@ -96,14 +100,12 @@ const arrayOfPeople = [
     },
 ]
 
-let blue = document.getElementById('blue');
-let red = document.getElementById('red');
 
 const listOfPlayers = []
 const blueTeam = []
 const redTeam = []
 
-class player {
+class Player {
     constructor(id, name, age, skillSet, placeBorn, canThrowBall, canDodgeBall, hasPaid, isHealthy, yearsExperience){
         this.id = id;
         this.name = name;
@@ -143,29 +145,34 @@ class player {
        }
     }
   
-  const listPeopleChoices = () => {
-    const listElement = document.getElementById('people')
-    arrOfPeople.map(person => {
-      const li = document.createElement("li")
-      const button = document.createElement("button")
-      button.innerHTML = "Make Player"
-      button.addEventListener('click', function() {makePlayer(person.id)} )
-      li.appendChild(button)
-      li.appendChild(document.createTextNode(person.name + " - " + person.skillSet))
-      listElement.append(li)
-    })
-  }
+    const listPeopleChoices = () => {
+        const listElement = document.getElementById('people');
+        arrayOfPeople.map(person => {
+          const li = document.createElement('li');
+          const buttonPlayer = document.createElement('button');
+          buttonPlayer.innerHTML = 'Make Player';
+          buttonPlayer.addEventListener('click', function() {
+            makePlayer(person.id);
+            listElement.removeChild(li);
+          })
+          li.appendChild(buttonPlayer);
+          li.appendChild(document.createTextNode(`${person.name} - Years of Experience: ${person.yearsExperience}`));
+          listElement.append(li);
+        })
+      }
   
+      module.exports = { listPeopleChoices }
+
   const makePlayer = (person) => {
       const listElement = document.getElementById('players')
       let findPlayer = arrayOfPeople.find(result => {
           return result.id == person;
       })
-      let playerIndex = arrayOfPeople.indexOf(findplayer);
+      let playerIndex = arrayOfPeople.indexOf(findPlayer);
       arrayOfPeople.splice(playerIndex, 1);
       let dBPlayer = new Player(
           findPlayer.id,
-          findplayer.name,
+          findPlayer.name,
           findPlayer.age,
           findPlayer.skillSet,
           findPlayer.placeBorn,
@@ -182,7 +189,12 @@ class player {
       redButton.innerHTML = "Assign to Red team";
       blueButton.innerHTML = "Assign to Blue team";
       redButton.addEventListener('click', function(){
-          addToRed(dBPlayer.id);(li)
+          addToRed(dBPlayer.id);
+          listElement.removeChild(li);
+      })
+      blueButton.addEventListener('click', function() {
+          addToBlue(dBPlayer.id);
+          listElement.removeChild(li);
       })
       li.appendChild(redButton);
       li.appendChild(blueButton);
